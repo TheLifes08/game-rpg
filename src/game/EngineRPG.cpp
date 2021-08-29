@@ -1,16 +1,18 @@
 #include "EngineRPG.h"
 #include "scenes/GameScene.h"
-#include "../engine/audio/MusicManager.h"
-#include "../engine/texture/TextureManager.h"
+#include "../engine/graphics/TextureManager.h"
+#include "../engine/graphics/FontManager.h"
 
 int Game::EngineRPG::initialize() {
     sf::RenderWindow& window = m_manager.getWindow();
-    ::Engine::Audio::MusicManager& musicManager = ::Engine::Audio::MusicManager::getInstance();
-    ::Engine::Texture::TextureManager& textureManager = ::Engine::Texture::TextureManager::getInstance();
+    ::Engine::Graphics::TextureManager& textureManager = ::Engine::Graphics::TextureManager::getInstance();
+    ::Engine::Graphics::FontManager& fontManager = ::Engine::Graphics::FontManager::getInstance();
 
     textureManager.loadTexture("resources/tiles1.png", "tiles1");
+    fontManager.loadFont("resources/arial.ttf", "arial");
 
     window.create(sf::VideoMode(800, 600), "RPG", sf::Style::Close);
+    window.setKeyRepeatEnabled(false);
     m_manager.setScene(std::make_unique<Scenes::GameScene>(m_manager));
 
     return 0;

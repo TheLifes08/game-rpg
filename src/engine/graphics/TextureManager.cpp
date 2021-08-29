@@ -1,11 +1,11 @@
 #include "TextureManager.h"
 
-Engine::Texture::TextureManager& Engine::Texture::TextureManager::getInstance() {
+Engine::Graphics::TextureManager& Engine::Graphics::TextureManager::getInstance() {
     static TextureManager textureManager;
     return textureManager;
 }
 
-bool Engine::Texture::TextureManager::loadTexture(const std::string& path, const std::string &name) {
+bool Engine::Graphics::TextureManager::loadTexture(const std::string& path, const std::string &name) {
     sf::Texture texture;
 
     if (name.empty() || !texture.loadFromFile(path)) {
@@ -17,9 +17,9 @@ bool Engine::Texture::TextureManager::loadTexture(const std::string& path, const
     return true;
 }
 
-sf::Texture& Engine::Texture::TextureManager::getTexture(const std::string &name) {
+sf::Texture& Engine::Graphics::TextureManager::getTexture(const std::string& name) {
     if (m_textures.count(name) == 0) {
-        throw std::invalid_argument("Wrong texture name.");
+        throw std::invalid_argument("Wrong texture name: " + name);
     }
 
     return m_textures[name];

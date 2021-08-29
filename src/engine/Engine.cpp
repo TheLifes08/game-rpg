@@ -1,14 +1,15 @@
 #include "Engine.h"
 
-Engine::Engine::Engine(): m_loopEnabled(true) {}
-
 int Engine::Engine::execute() {
     int errorCode = initialize();
 
-    while (m_loopEnabled) {
-        errorCode = m_manager.start();
-        m_loopEnabled = false;
+    if (errorCode == 0) {
+        m_manager.start();
     }
 
-    return errorCode;
+    return 0;
+}
+
+int Engine::Engine::initialize() {
+    return 0;
 }

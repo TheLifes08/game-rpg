@@ -9,13 +9,11 @@ namespace Engine {
     namespace Common {
         class Exception : public std::exception {
         public:
-            explicit Exception(const std::string& message, int errorCode = 0);
+            explicit Exception(const std::string& message);
             const char* what() const noexcept override;
-            int errorCode() const noexcept;
 
         private:
             std::string m_message;
-            int m_errorCode;
         };
     }
 }

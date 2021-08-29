@@ -1,12 +1,12 @@
-#ifndef ENGINE_GUI_FONT_MANAGER_H
-#define ENGINE_GUI_FONT_MANAGER_H
+#ifndef ENGINE_GRAPHICS_FONT_MANAGER_H
+#define ENGINE_GRAPHICS_FONT_MANAGER_H
 
 #include <SFML/Graphics.hpp>
 #include <map>
 
 
 namespace Engine {
-    namespace Gui {
+    namespace Graphics {
         class FontManager {
         public:
             FontManager(const FontManager&) = delete;
@@ -27,4 +27,4 @@ namespace Engine {
 }
 
 
-#endif // ENGINE_GUI_FONT_MANAGER_H
+#endif // ENGINE_GRAPHICS_FONT_MANAGER_H

@@ -13,5 +13,8 @@ bool Engine::Audio::MusicManager::playMusic(const std::string &path) {
     }
 
     m_music.setLoop(true);
+    m_music.setVolume(7);
     m_music.play();
+
+    return true;
 }

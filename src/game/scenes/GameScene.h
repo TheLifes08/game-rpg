@@ -3,6 +3,7 @@
 
 #include "../../engine/gui/WindowManager.h"
 #include "../../engine/map/Map.h"
+#include "../../engine/object/Creature.h"
 
 
 namespace Game {
@@ -16,6 +17,7 @@ namespace Game {
 
         private:
             Engine::Map::Map m_map;
+            Engine::Object::Creature m_player;
         };
     }
 }

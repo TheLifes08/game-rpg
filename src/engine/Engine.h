@@ -7,20 +7,18 @@
 namespace Engine {
     class Engine {
     public:
-        Engine();
+        Engine() = default;
         Engine(const Engine&) = delete;
         Engine(Engine&&) = delete;
         Engine& operator=(const Engine&) = delete;
         Engine& operator=(Engine&&) = delete;
         ~Engine() = default;
 
-        virtual int initialize() = 0;
-
+        virtual int initialize();
         int execute();
 
     protected:
         Gui::WindowManager m_manager;
-        bool m_loopEnabled;
     };
 }
 

@@ -1,11 +1,11 @@
 #include "FontManager.h"
 
-Engine::Gui::FontManager& Engine::Gui::FontManager::getInstance() {
+Engine::Graphics::FontManager& Engine::Graphics::FontManager::getInstance() {
     static FontManager fontManager;
     return fontManager;
 }
 
-bool Engine::Gui::FontManager::loadFont(const std::string& path, const std::string& name) {
+bool Engine::Graphics::FontManager::loadFont(const std::string& path, const std::string& name) {
     sf::Font font;
 
     if (name.empty() || !font.loadFromFile(path)) {
@@ -17,7 +17,7 @@ bool Engine::Gui::FontManager::loadFont(const std::string& path, const std::stri
     return true;
 }
 
-sf::Font& Engine::Gui::FontManager::getFont(const std::string &name) {
+sf::Font& Engine::Graphics::FontManager::getFont(const std::string &name) {
     if (m_fonts.count(name) == 0) {
         throw std::invalid_argument("Wrong font name.");
     }

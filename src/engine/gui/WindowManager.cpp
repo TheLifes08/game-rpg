@@ -10,7 +10,7 @@ void Engine::Gui::WindowManager::setScene(std::unique_ptr<Scene>&& scene) {
     m_scene = std::move(scene);
 }
 
-int Engine::Gui::WindowManager::start() {
+void Engine::Gui::WindowManager::start() {
     sf::Clock clock;
 
     try {
@@ -43,18 +43,13 @@ int Engine::Gui::WindowManager::start() {
 
             m_window.display();
         }
-    } catch (const Common::Exception& e) {
-        std::cerr << e.what() << "\n";
-        return e.errorCode();
     } catch (const std::exception& e) {
         std::cerr << e.what() << "\n";
-        return -1;
+        return;
     } catch (...) {
         std::cerr << "Unknown error!\n";
-        return -2;
+        return;
     }
-
-    return 0;
 }
 
 sf::RenderWindow& Engine::Gui::WindowManager::getWindow() {

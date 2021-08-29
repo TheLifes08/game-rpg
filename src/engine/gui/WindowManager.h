@@ -15,7 +15,7 @@ namespace Engine {
             void setReplacementScene(std::unique_ptr<Scene>&& scene);
             void setScene(std::unique_ptr<Scene>&& scene);
 
-            int start();
+            void start();
             sf::RenderWindow& getWindow();
 
         private:

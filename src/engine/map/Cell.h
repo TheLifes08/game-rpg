@@ -1,15 +1,17 @@
 #ifndef ENGINE_MAP_CELL_H
 #define ENGINE_MAP_CELL_H
 
-#include <string>
+#include "../graphics/SpriteInfo.h"
 
 
 namespace Engine {
     namespace Map {
         struct Cell {
-            std::string tileMapName;
-            size_t offsetX;
-            size_t offsetY;
+            static const size_t cellSizeX = 64;
+            static const size_t cellSizeY = 64;
+
+            Graphics::SpriteInfo spriteInfo;
+            bool solid = false;
         };
     }
 }

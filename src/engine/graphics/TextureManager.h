@@ -1,12 +1,12 @@
-#ifndef ENGINE_TEXTURE_TEXTURE_MANAGER_H
-#define ENGINE_TEXTURE_TEXTURE_MANAGER_H
+#ifndef ENGINE_GRAPHICS_TEXTURE_MANAGER_H
+#define ENGINE_GRAPHICS_TEXTURE_MANAGER_H
 
 #include <SFML/Graphics.hpp>
 #include <map>
 
 
 namespace Engine {
-    namespace Texture {
+    namespace Graphics {
         class TextureManager {
         public:
             TextureManager(const TextureManager&) = delete;
@@ -27,4 +27,4 @@ namespace Engine {
 }
 
 
-#endif // ENGINE_TEXTURE_TEXTURE_MANAGER_H
+#endif // ENGINE_GRAPHICS_TEXTURE_MANAGER_H
