@@ -1,5 +1,6 @@
 #include "Map.h"
 #include <iostream>
+#include <cmath>
 
 Engine::Map::Map::Map(): m_size(0, 0) {}
 
@@ -9,9 +10,21 @@ Engine::Map::Map::Map(size_t sizeX, size_t sizeY): m_size(sizeX, sizeY) {
 
 Engine::Map::Cell& Engine::Map::Map::get(size_t x, size_t y) {
     if (m_rows.size() <= y || m_rows[y].row.size() <= x) {
-        throw std::invalid_argument("Map out of range.");
+        return m_outboundCell;
     }
+
     return m_rows[y].row[x];
+}
+
+Engine::Map::Cell &Engine::Map::Map::get(double x, double y) {
+    size_t x_ = std::floor(x);
+    size_t y_ = std::floor(y);
+
+    if (m_rows.size() <= y_ || m_rows[y_].row.size() <= x_) {
+        return m_outboundCell;
+    }
+
+    return m_rows[y_].row[x_];
 }
 
 std::vector<Engine::Object::Object>& Engine::Map::Map::getObjects() {

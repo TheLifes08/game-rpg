@@ -16,6 +16,7 @@ namespace Engine {
             Map(size_t sizeX, size_t sizeY);
 
             Cell& get(size_t x, size_t y);
+            Cell& get(double x, double y);
             std::vector<Object::Object>& getObjects();
             bool loadMap(std::istream& dataStream);
             Common::Size getSize();
@@ -30,6 +31,7 @@ namespace Engine {
             Common::Size m_size;
             std::vector<MapRow> m_rows;
             std::vector<Object::Object> m_objects;
+            Cell m_outboundCell;
         };
     }
 }
