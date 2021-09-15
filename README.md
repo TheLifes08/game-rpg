@@ -1,1 +1,1 @@
-# sfml-rpg-game
+# game-rpg
