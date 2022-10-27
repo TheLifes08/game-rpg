@@ -8,8 +8,8 @@ int Game::EngineRPG::initialize() {
     ::Engine::Graphics::TextureManager& textureManager = ::Engine::Graphics::TextureManager::getInstance();
     ::Engine::Graphics::FontManager& fontManager = ::Engine::Graphics::FontManager::getInstance();
 
-    textureManager.loadTexture("resources/tiles1.png", "tiles1");
-    fontManager.loadFont("resources/arial.ttf", "arial");
+    textureManager.loadTexture("../content/images/tiles1.png", "tiles1");
+    fontManager.loadFont("../content/fonts/arial.ttf", "arial");
 
     window.create(sf::VideoMode(800, 600), "RPG", sf::Style::Close);
     window.setKeyRepeatEnabled(false);

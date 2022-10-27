@@ -10,9 +10,9 @@ Game::Scenes::GameScene::GameScene(Engine::Gui::WindowManager& manager)
 : Scene(manager), m_player("tiles1", {1, 1}) {
     Engine::Audio::MusicManager& musicManager = ::Engine::Audio::MusicManager::getInstance();
 
-    musicManager.playMusic("resources/main-menu.ogg");
+    musicManager.playMusic("../content/audio/main-menu.ogg");
 
-    std::ifstream mapFile("resources/map1.map");
+    std::ifstream mapFile("../content/maps/map1.map");
 
     if (mapFile.is_open()) {
         m_map.loadMap(mapFile);
@@ -97,6 +97,24 @@ void Game::Scenes::GameScene::onUpdate(const sf::Time& elapsedTime) {
     sf::RenderWindow& window = m_manager.getWindow();
     window.clear();
 
+    // Move view
+  sf::View view = window.getView();
+    double viewX = m_player.position().x;
+    double viewY = m_player.position().y;
+
+
+    if (viewX < view.getSize().x / 2) {
+        viewX = view.getSize().x / 2;
+    }
+
+    if (viewY < view.getSize().y / 2) {
+        viewY = view.getSize().y / 2;
+    }
+
+
+    view.setCenter(static_cast<float>(viewX), static_cast<float>(viewY));
+    m_manager.getWindow().setView(view);
+
     // Draw tiles
     sf::Sprite sprite;
 
@@ -124,7 +142,6 @@ void Game::Scenes::GameScene::onUpdate(const sf::Time& elapsedTime) {
 
     // Draw UI
     sf::Font& uiFont = Engine::Graphics::FontManager::getInstance().getFont("arial");
-    sf::View view = window.getView();
     sf::Text text("", uiFont, 10);
     Engine::Common::Position textOffset = {2, 1};
 
@@ -163,23 +180,6 @@ void Game::Scenes::GameScene::onUpdate(const sf::Time& elapsedTime) {
     drawLine(sf::Vector2f(topRightPoint.x, topRightPoint.y), sf::Vector2f(bottomRightPoint.x, bottomRightPoint.y));
     drawLine(sf::Vector2f(bottomRightPoint.x, bottomRightPoint.y), sf::Vector2f(bottomLeftPoint.x, bottomLeftPoint.y));
     drawLine(sf::Vector2f(bottomLeftPoint.x, bottomLeftPoint.y), sf::Vector2f(topLeftPoint.x, topLeftPoint.y));
-
-    // Move view
-    double viewX = m_player.position().x;
-    double viewY = m_player.position().y;
-
-    /*
-    if (viewX < view.getSize().x / 2) {
-        viewX = view.getSize().x / 2;
-    }
-
-    if (viewY < view.getSize().y / 2) {
-        viewY = view.getSize().y / 2;
-    }*/
-
-    view = window.getView();
-    view.setCenter(static_cast<float>(viewX), static_cast<float>(viewY));
-    m_manager.getWindow().setView(view);
 
     // Display window
     window.display();
