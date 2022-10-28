@@ -12,4 +12,4 @@ add_executable(sfml-rpg-game ${SOURCES})
 link_libraries(game-engine rpg-game)
 target_link_libraries(sfml-rpg-game game-engine rpg-game sfml-graphics sfml-audio)
 
-file(COPY "resources" DESTINATION ".")
+file(COPY "content" DESTINATION ".")
