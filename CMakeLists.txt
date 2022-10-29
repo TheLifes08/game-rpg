@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.16)
 project(sfml-rpg-game)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 23)
 find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
 
-add_subdirectory(src/engine)
-add_subdirectory(src/game)
+include_directories(sources)
 
-set(SOURCES src/main.cpp)
-add_executable(sfml-rpg-game ${SOURCES})
-link_libraries(game-engine rpg-game)
-target_link_libraries(sfml-rpg-game game-engine rpg-game sfml-graphics sfml-audio)
+add_subdirectory(sources/engine)
+add_subdirectory(sources/game)
+
+add_executable(rpg-game sources/main.cpp)
+target_link_libraries(rpg-game engine game)
 
 file(COPY "content" DESTINATION ".")
