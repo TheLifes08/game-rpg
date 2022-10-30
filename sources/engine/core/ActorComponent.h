@@ -5,19 +5,20 @@
 
 namespace Engine::Core
 {
-  class Actor;
+  //class Actor;
   class ActorComponent;
 
   using ActorComponentPtr = std::shared_ptr<ActorComponent>;
-  using ActorWeakPtr = std::weak_ptr<Actor>;
-
+  using ActorComponentConstPtr = std::shared_ptr<const ActorComponent>;
+  //using ActorWeakPtr = std::weak_ptr<Actor>;
+  // TODO: Add functional
   class ActorComponent: public Object
   {
   public:
     ~ActorComponent() override = default;
 
   private:
-    ActorWeakPtr m_owner;
+    //ActorWeakPtr m_owner;
   };
 }
 

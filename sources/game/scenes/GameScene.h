@@ -4,6 +4,7 @@
 #include "../../engine/gui/WindowManager.h"
 #include "../../engine/map/Map.h"
 #include "../../engine/core/Actor.h"
+#include <SFML/Audio.hpp>
 
 
 namespace Game {
@@ -16,6 +17,7 @@ namespace Game {
             void onUpdate(const sf::Time& elapsedTime) override;
 
         private:
+          sf::Music s;
             Engine::Map::Map m_map;
             Engine::Core::Actor m_player;
         };

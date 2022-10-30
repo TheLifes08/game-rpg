@@ -4,8 +4,12 @@ namespace Engine::Core
 {
   SceneComponent::SceneComponent():
     Object(),
-    m_transform{{0, 0}, 0, {1, 1}}
-  {}
+    m_position{0, 0},
+    m_rotation{0},
+    m_scale{1, 1}
+  {
+    updateTransformMatrix();
+  }
 
   void SceneComponent::onCreate()
   {
@@ -39,43 +43,79 @@ namespace Engine::Core
     }
   }
 
-  Math::Vector SceneComponent::getPosition() const
+  Common::Position SceneComponent::getPosition() const
   {
-    return m_transform.position;
+    return m_position;
   }
 
-  void SceneComponent::setPosition(const Math::Vector& position)
+  void SceneComponent::setPosition(const Common::Position& position)
   {
-    m_transform.position = position;
+    m_position = position;
+    updateTransformMatrix();
   }
 
-  double SceneComponent::getRotation() const
+  Common::Rotation SceneComponent::getRotation() const
   {
-    return m_transform.rotation;
+    return m_rotation;
   }
 
-  void SceneComponent::setRotation(double rotation)
+  void SceneComponent::setRotation(Common::Rotation rotation)
   {
-    m_transform.rotation = rotation;
+    m_rotation = rotation;
+    updateTransformMatrix();
   }
 
-  Math::Vector SceneComponent::getScale() const
+  Common::Vector SceneComponent::getScale() const
   {
-    return m_transform.scale;
+    return m_scale;
   }
 
-  void SceneComponent::setScale(const Math::Vector& scale)
+  void SceneComponent::setScale(const Common::Vector& scale)
   {
-    m_transform.scale = scale;
+    m_scale = scale;
+    updateTransformMatrix();
   }
 
-  Math::Transform SceneComponent::getTransform() const
+  Common::Transform SceneComponent::getTransform() const
   {
     return m_transform;
   }
 
-  void SceneComponent::setTransform(const Math::Transform& transform)
+  std::vector<SceneComponentPtr> SceneComponent::getChildComponents()
   {
-    m_transform = transform;
+    return m_childComponents;
+  }
+
+  std::vector<SceneComponentConstPtr> SceneComponent::getChildComponents() const
+  {
+    return std::vector<SceneComponentConstPtr>();
+  }
+
+  void SceneComponent::addChildSceneComponent(const SceneComponentPtr& component)
+  {
+    if(component.get() == this)
+    {
+      return;
+    }
+
+    const auto position = std::find(m_childComponents.begin(), m_childComponents.end(), component);
+    if(position == m_childComponents.end())
+    {
+      m_childComponents.push_back(component);
+    }
+  }
+
+  void SceneComponent::removeChildSceneComponent(const SceneComponentPtr& component)
+  {
+    const auto position = std::find(m_childComponents.begin(), m_childComponents.end(), component);
+    m_childComponents.erase(position);
+  }
+
+  void SceneComponent::updateTransformMatrix()
+  {
+    m_transform = sf::Transform::Identity;
+    m_transform.translate(m_position);
+    m_transform.rotate(m_rotation);
+    m_transform.scale(m_scale);
   }
 }

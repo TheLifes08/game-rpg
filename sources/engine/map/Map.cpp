@@ -40,7 +40,7 @@ bool Engine::Map::Map::loadMap(std::istream& dataStream) {
 
         m_rows.clear();
         m_rows.resize(mapHeight, MapRow(mapWidth));
-        m_size = Math::Size(mapWidth, mapHeight);
+        m_size = Common::Size(mapWidth, mapHeight);
 
         for (size_t y = 0; y < mapHeight; ++y) {
             for (size_t x = 0; x < mapWidth; ++x) {
@@ -63,7 +63,7 @@ bool Engine::Map::Map::loadMap(std::istream& dataStream) {
     return true;
 }
 
-Engine::Math::Size Engine::Map::Map::getSize() {
+Engine::Common::Size Engine::Map::Map::getSize() {
     return m_size;
 }
 

@@ -1,5 +1,4 @@
 #include "WindowManager.h"
-#include "../common/Exception.h"
 #include <iostream>
 
 void Engine::Gui::WindowManager::setReplacementScene(std::unique_ptr<Scene>&& scene) {

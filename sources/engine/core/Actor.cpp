@@ -24,43 +24,74 @@ namespace Engine::Core
   {
   }
 
-  Math::Vector Actor::getActorPosition() const
+  Common::Position Actor::getActorPosition() const
   {
     return m_sceneRootComponent->getPosition();
   }
 
-  void Actor::setActorPosition(const Engine::Math::Vector& position)
+  void Actor::setActorPosition(const Common::Position& position)
   {
     m_sceneRootComponent->setPosition(position);
   }
 
-  double Actor::getActorRotation() const
+  Common::Rotation Actor::getActorRotation() const
   {
     return m_sceneRootComponent->getRotation();
   }
 
-  void Actor::setActorRotation(double rotation)
+  void Actor::setActorRotation(Common::Rotation rotation)
   {
     m_sceneRootComponent->setRotation(rotation);
   }
 
-  Math::Vector Actor::getActorScale() const
+  Common::Scale Actor::getActorScale() const
   {
     return m_sceneRootComponent->getScale();
   }
 
-  void Actor::setActorScale(const Engine::Math::Vector& scale)
+  void Actor::setActorScale(const Common::Scale & scale)
   {
     m_sceneRootComponent->setScale(scale);
   }
 
-  Math::Transform Actor::getActorTransform() const
+  SceneComponentPtr Actor::getSceneRootComponent()
   {
-    return m_sceneRootComponent->getTransform();
+    return m_sceneRootComponent;
   }
 
-  void Actor::setActorTransform(const Engine::Math::Transform& transform)
+  SceneComponentConstPtr Actor::getSceneRootComponent() const
   {
-    m_sceneRootComponent->setTransform(transform);
+    return m_sceneRootComponent;
+  }
+
+  std::vector<ActorComponentPtr> Actor::getActorComponents()
+  {
+    return m_actorComponents;
+  }
+
+  std::vector<ActorComponentConstPtr> Actor::getActorComponents() const
+  {
+    std::vector<ActorComponentConstPtr> result;
+    result.resize(m_actorComponents.size());
+    for(size_t i = 0; i < m_actorComponents.size(); ++i)
+    {
+      result[i] = m_actorComponents[i];
+    }
+    return result;
+  }
+
+  void Actor::addActorComponent(const ActorComponentPtr& component)
+  {
+    const auto position = std::find(m_actorComponents.begin(), m_actorComponents.end(), component);
+    if(position == m_actorComponents.end())
+    {
+      m_actorComponents.push_back(component);
+    }
+  }
+
+  void Actor::removeActorComponent(const ActorComponentPtr& component)
+  {
+    const auto position = std::find(m_actorComponents.begin(), m_actorComponents.end(), component);
+    m_actorComponents.erase(position);
   }
 }

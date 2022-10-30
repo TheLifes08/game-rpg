@@ -7,14 +7,12 @@ add_subdirectory(core)
 add_subdirectory(graphics)
 add_subdirectory(gui)
 add_subdirectory(map)
-add_subdirectory(math)
 
 set(HEADERS Engine.h)
 set(SOURCES Engine.cpp)
 
 add_library(engine SHARED ${HEADERS} ${SOURCES}
             $<TARGET_OBJECTS:engine-audio>
-            $<TARGET_OBJECTS:engine-common>
             $<TARGET_OBJECTS:engine-core>
             $<TARGET_OBJECTS:engine-graphics>
             $<TARGET_OBJECTS:engine-gui>

@@ -34,7 +34,7 @@ namespace Engine::Core
       return object;
     }
 
-    template<IsObject T>
+    template<IsActor T>
     inline ActorPtr createActor()
     {
       const auto object = std::make_shared<T>();

@@ -2,7 +2,7 @@
 #define ENGINE_MAP_MAP_H
 
 #include "Cell.h"
-#include <engine/math/Vector2D.h>
+#include <engine/common/Types.h>
 #include <engine/core/Object.h>
 #include <istream>
 #include <vector>
@@ -19,7 +19,7 @@ namespace Engine {
             Cell& get(double x, double y);
             std::vector<Core::Object>& getObjects();
             bool loadMap(std::istream& dataStream);
-            Math::Size getSize();
+            Common::Size getSize();
 
 
         private:
@@ -28,7 +28,7 @@ namespace Engine {
                 explicit MapRow(size_t size);
             };
 
-            Math::Size m_size;
+            Common::Size m_size;
             std::vector<MapRow> m_rows;
             std::vector<Core::Object> m_objects;
             Cell m_outboundCell;

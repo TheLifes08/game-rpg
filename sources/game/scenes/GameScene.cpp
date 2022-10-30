@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <engine/core/components/StaticMeshSceneComponent.h>
 
 Game::Scenes::GameScene::GameScene(Engine::Gui::WindowManager& manager)
 : Scene(manager), m_player() {
@@ -12,10 +13,10 @@ Game::Scenes::GameScene::GameScene(Engine::Gui::WindowManager& manager)
 
     musicManager.loadSound("content/audio/main-menu.ogg", "main-menu-theme");
 
-    sf::Sound s;
-    s.setBuffer(musicManager.getSound("main-menu-theme"));
-    s.setVolume(50);
-    s.play();
+
+        s.openFromFile("content/audio/main-menu.ogg");
+        s.setVolume(50);
+        s.play();
 
     std::ifstream mapFile("content/maps/map1.map");
 
@@ -25,6 +26,22 @@ Game::Scenes::GameScene::GameScene(Engine::Gui::WindowManager& manager)
         std::cerr << "Cannot open map file!\n";
     }
 
+  Engine::Graphics::TextureManager& textureManager = Engine::Graphics::TextureManager::getInstance();
+
+    const auto mc = std::make_shared<Engine::Core::StaticMeshSceneComponent>();
+
+    Engine::Geometry::StaticMesh2D mesh;
+    mesh.m_textureName = "tiles1";
+    mesh.m_vertexes.resize(4);
+    mesh.m_vertexes.setPrimitiveType(sf::PrimitiveType::Quads);
+    mesh.m_vertexes[0] = sf::Vertex({0, 0}, {64 * 2 + 8, 64 * 4 + 8});
+    mesh.m_vertexes[1] = sf::Vertex({48, 0}, {64 * 2 + 8 + 48, 64 * 4 + 8});
+    mesh.m_vertexes[2] = sf::Vertex({48, 48}, {64 * 2 + 8 + 48, 64 * 4 + 8 + 48});
+    mesh.m_vertexes[3] = sf::Vertex({0, 48}, {64 * 2 + 8, 64 * 4 + 8 + 48});
+    mesh.setPivotPoint({24, 24});
+
+    mc->setMesh(mesh);
+    m_player.getSceneRootComponent()->addChildSceneComponent(mc);
     //m_player.sprite().setTextureRect(sf::IntRect(64 * 2, 64 * 4, 64, 64));
     //m_player.sprite().setOrigin(32, 32);
   m_player.setActorPosition({128, 128});
@@ -33,34 +50,27 @@ Game::Scenes::GameScene::GameScene(Engine::Gui::WindowManager& manager)
 void Game::Scenes::GameScene::onEvent(const sf::Event& event) {
     if (event.type == sf::Event::KeyPressed) {
         sf::View view = m_manager.getWindow().getView();
+        auto pp = m_player.getActorPosition();
 
         if (event.key.code == sf::Keyboard::W) {
-            //m_player.velocity().y -= 400;
+          pp -= {0, 25};
         } else if (event.key.code == sf::Keyboard::A) {
-            //m_player.velocity().x -= 400;
+          pp -= {25, 0};
         } else if (event.key.code == sf::Keyboard::S) {
-            //m_player.velocity().y += 400;
+          pp += {0, 25};
         } else if (event.key.code == sf::Keyboard::D) {
-            //m_player.velocity().x += 400;
+          pp += {25, 0};
         }
+
+        m_player.setActorPosition(pp);
 
         m_manager.getWindow().setView(view);
-    } else if (event.type == sf::Event::KeyReleased) {
-        if (event.key.code == sf::Keyboard::W) {
-            //m_player.velocity().y += 400;
-        } else if (event.key.code == sf::Keyboard::A) {
-            //m_player.velocity().x += 400;
-        } else if (event.key.code == sf::Keyboard::S) {
-            //m_player.velocity().y -= 400;
-        } else if (event.key.code == sf::Keyboard::D) {
-            //m_player.velocity().x -= 400;
-        }
     }
 }
 
 void Game::Scenes::GameScene::onUpdate(const sf::Time& elapsedTime) {
     Engine::Graphics::TextureManager& textureManager = Engine::Graphics::TextureManager::getInstance();
-    Engine::Math::Vector previousPlayerPosition = m_player.getActorPosition();
+    Engine::Common::Vector previousPlayerPosition = m_player.getActorPosition();
 
     // Update all objects
     m_player.onTick(elapsedTime.asSeconds());
@@ -71,22 +81,22 @@ void Game::Scenes::GameScene::onUpdate(const sf::Time& elapsedTime) {
 
     // Collision
     auto getTopLeftPoint = [this](int offset) {
-        return Engine::Math::Vector (m_player.getActorPosition().x - offset, m_player.getActorPosition().y - offset);
+        return Engine::Common::Vector (m_player.getActorPosition().x - offset, m_player.getActorPosition().y - offset);
     };
     auto getTopRightPoint = [this](int offset) {
-        return Engine::Math::Vector(m_player.getActorPosition().x + offset, m_player.getActorPosition().y - offset);
+        return Engine::Common::Vector(m_player.getActorPosition().x + offset, m_player.getActorPosition().y - offset);
     };
     auto getBottomLeftPoint = [this](int offset) {
-        return Engine::Math::Vector(m_player.getActorPosition().x - offset, m_player.getActorPosition().y + offset);
+        return Engine::Common::Vector(m_player.getActorPosition().x - offset, m_player.getActorPosition().y + offset);
     };
     auto getBottomRightPoint = [this](int offset) {
-        return Engine::Math::Vector(m_player.getActorPosition().x + offset, m_player.getActorPosition().y + offset);
+        return Engine::Common::Vector(m_player.getActorPosition().x + offset, m_player.getActorPosition().y + offset);
     };
 
-    Engine::Math::Vector topLeftPoint = getTopLeftPoint(20);
-    Engine::Math::Vector topRightPoint = getTopRightPoint(20);
-    Engine::Math::Vector bottomLeftPoint = getBottomLeftPoint(20);
-    Engine::Math::Vector bottomRightPoint = getBottomRightPoint(20);
+    Engine::Common::Vector topLeftPoint = getTopLeftPoint(20);
+    Engine::Common::Vector topRightPoint = getTopRightPoint(20);
+    Engine::Common::Vector bottomLeftPoint = getBottomLeftPoint(20);
+    Engine::Common::Vector bottomRightPoint = getBottomRightPoint(20);
 
     bool topLeftCollision = m_map.get(topLeftPoint.x / 64, topLeftPoint.y / 64).solid;
     bool topRightCollision = m_map.get(topRightPoint.x / 64, topRightPoint.y / 64).solid;
@@ -135,19 +145,37 @@ void Game::Scenes::GameScene::onUpdate(const sf::Time& elapsedTime) {
 
     // Draw objects
     for (auto& object : m_map.getObjects()) {
+
         //sf::Sprite& objectSprite = object.sprite();
         //objectSprite.setPosition(static_cast<float>(object.position().x), static_cast<float>(object.position().y));
         //window.draw(objectSprite);
     }
 
     // Draw player
+    for(const auto& component : m_player.getSceneRootComponent()->getChildComponents())
+    {
+      auto mc = std::dynamic_pointer_cast<Engine::Core::StaticMeshSceneComponent>(component);
+      if(mc)
+      {
+        auto mesh = mc->getMesh();
+        const auto rc = m_player.getSceneRootComponent();
+        const auto texture = textureManager.getTexture(mesh.m_textureName);
+        //sprite.setPosition(rc->getPosition());
+        //sprite.setRotation(rc->getRotation());
+        //sprite.setScale(rc->getScale());
+        sf::RenderStates st;
+        st.texture = &texture;
+        st.transform = m_player.getSceneRootComponent()->getTransform();
+        window.draw(mesh.m_vertexes, st);
+      }
+    }
     //m_player.sprite().setPosition(m_player.position().x, m_player.position().y);
     //window.draw(m_player.sprite());
 
     // Draw UI
     sf::Font& uiFont = Engine::Graphics::FontManager::getInstance().getFont("arial");
     sf::Text text("", uiFont, 10);
-    Engine::Math::Vector textOffset = {2, 1};
+    Engine::Common::Vector textOffset = {2, 1};
 
     text.setString("FPS: " + std::to_string(static_cast<int>(1.0 / elapsedTime.asSeconds())));
     text.setPosition(static_cast<float>(view.getCenter().x - view.getSize().x / 2 + textOffset.x),

@@ -11,7 +11,6 @@ namespace Engine::Core
   class Actor;
 
   using ActorPtr = std::shared_ptr<Actor>;
-  using ActorWeakPtr = std::weak_ptr<Actor>;
 
   class Actor: public Object
   {
@@ -24,18 +23,27 @@ namespace Engine::Core
     void onTick(double deltaTime) override;
     void onEndPlay() override;
 
-    Math::Vector getActorPosition() const;
-    void setActorPosition(const Math::Vector& position);
-    double getActorRotation() const;
-    void setActorRotation(double rotation);
-    Math::Vector getActorScale() const;
-    void setActorScale(const Math::Vector& scale);
-    Math::Transform getActorTransform() const;
-    void setActorTransform(const Math::Transform& transform);
+    Common::Position getActorPosition() const;
+    void setActorPosition(const Common::Position& position);
+
+    Common::Rotation getActorRotation() const;
+    void setActorRotation(Common::Rotation rotation);
+
+    Common::Scale getActorScale() const;
+    void setActorScale(const Common::Scale& scale);
+
+    SceneComponentPtr getSceneRootComponent();
+    SceneComponentConstPtr getSceneRootComponent() const;
+
+    std::vector<ActorComponentPtr> getActorComponents();
+    std::vector<ActorComponentConstPtr> getActorComponents() const;
+
+    void addActorComponent(const ActorComponentPtr& component);
+    void removeActorComponent(const ActorComponentPtr& component);
 
   private:
     SceneComponentPtr m_sceneRootComponent;
-    std::vector<ActorComponent> m_actorComponents;
+    std::vector<ActorComponentPtr> m_actorComponents;
   };
 }
 
