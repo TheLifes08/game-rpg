@@ -134,7 +134,7 @@ void Game::Scenes::GameScene::onUpdate(const sf::Time& elapsedTime) {
 
     for (size_t y = 0; y < m_map.getSize().y; ++y) {
         for (size_t x = 0; x < m_map.getSize().x; ++x) {
-            Engine::Map::Cell& cell = m_map.get(x, y);
+            Engine::Core::Cell& cell = m_map.get(x, y);
             sf::Texture& texture = textureManager.getTexture(cell.spriteInfo.tileMapName);
             sprite.setTexture(texture);
             sprite.setPosition(64 * x, 64 * y);

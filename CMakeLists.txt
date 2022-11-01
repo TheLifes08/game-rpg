@@ -3,6 +3,7 @@ project(sfml-rpg-game)
 
 set(CMAKE_CXX_STANDARD 23)
 find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
+find_package(nlohmann_json)
 
 include_directories(sources)
 

@@ -12,8 +12,8 @@ int Game::EngineRPG::initialize() {
     fontManager.loadFont("../content/fonts/arial.ttf", "arial");
 
     window.create(sf::VideoMode(800, 600), "RPG", sf::Style::Close);
-    //window.setKeyRepeatEnabled(false);
-    window.setFramerateLimit(240);
+    window.setKeyRepeatEnabled(false);
+    //window.setFramerateLimit(240);
     m_manager.setScene(std::make_unique<Scenes::GameScene>(m_manager));
 
     return 0;

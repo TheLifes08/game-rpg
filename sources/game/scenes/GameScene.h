@@ -2,7 +2,7 @@
 #define GAME_SCENES_GAME_SCENE_H
 
 #include "../../engine/gui/WindowManager.h"
-#include "../../engine/map/Map.h"
+#include "../../engine/core/Map.h"
 #include "../../engine/core/Actor.h"
 #include <SFML/Audio.hpp>
 
@@ -18,7 +18,7 @@ namespace Game {
 
         private:
           sf::Music s;
-            Engine::Map::Map m_map;
+            Engine::Core::Map m_map;
             Engine::Core::Actor m_player;
         };
     }

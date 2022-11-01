@@ -44,6 +44,7 @@ namespace Engine::Core
     void updateTransformMatrix();
 
   private:
+    // TODO: bool m_visible;
     Common::Position m_position;
     Common::Rotation m_rotation;
     Common::Scale m_scale;

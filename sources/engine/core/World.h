@@ -2,6 +2,7 @@
 #define ENGINE_CORE_WORLD_H
 
 #include <engine/core/Object.h>
+#include <engine/core/Map.h>
 #include <vector>
 
 namespace Engine::Core
@@ -16,6 +17,7 @@ namespace Engine::Core
     //void removeObject(const ObjectPtr& object);
 
   private:
+    std::shared_ptr<Map> m_map;
     std::vector<ObjectPtr> m_objects;
   };
 }
